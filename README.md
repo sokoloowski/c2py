@@ -2,9 +2,8 @@
 
 [![pytest](https://github.com/agh-c2py/c2py/actions/workflows/pytest.yaml/badge.svg)](https://github.com/agh-c2py/c2py/actions/workflows/pytest.yaml)
 
-Konwerter C do Pythona
+## Authors
 
-## Autorzy
+- [Kamila Skorupka](https://github.com/kskorupka)
+- [Piotr Sokołowski](https://github.com/sokoloowski)
 
-- Kamila Skorupka (kskorupka@student.agh.edu.pl)
-- Piotr Sokołowski (psokolowski@student.agh.edu.pl)
