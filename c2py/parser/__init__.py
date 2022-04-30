@@ -1,20 +1,20 @@
 class Reader:
     def __init__(self, code: str):
-        self.code = code
-        self.pos = 0
-        self.current_char = self.code[self.pos]
+        self.code = list(code)
 
-    def peek(self, pos=0) -> str | None:
-        peek_pos = self.pos + 0 if pos < 0 else pos
-        if peek_pos > len(self.code) - 1:
-            return None
-        return self.code[peek_pos]
+    def is_eof(self) -> bool:
+        return len(self.code) <= 0
 
-    def consume(self) -> str | None:
-        self.pos += 1
-        if self.pos > len(self.code):
+    def peek(self, k: int = 0) -> str | None:
+        if k > len(self.code) - 1:
             return None
-        return self.code[self.pos - 1]
+        return self.code[k]
+
+    def consume(self, k: int = 0) -> str | None:
+        if k > len(self.code) - 1:
+            return None
+        ch = self.code.pop(k)
+        return ch
 
 
 class Lexer:
