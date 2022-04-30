@@ -18,8 +18,19 @@ class Reader:
 
 
 class Lexer:
-    pass
+    def __init__(self):
+        pass
+
+    def peek(self, k: int = 0):
+        pass
+
+    def consume(self, k: int = 0):
+        pass
 
 
 class Parser:
-    pass
+    def __init__(self):
+        pass
+
+    def parse(self):
+        pass
