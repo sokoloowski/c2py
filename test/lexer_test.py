@@ -1,16 +1,18 @@
-from c2py.Lexer import Lexer
+from c2py.parser import Reader
+
 
 def test_peek():
-    lexer = Lexer("test")
-    assert lexer.peek() == "t"
-    for i in range(len(lexer.text)):
-        assert lexer.peek(i) == lexer.text[i]
-    assert lexer.peek(len(lexer.text)) == None
+    reader = Reader("test")
+    assert reader.peek() == "t"
+    for i in range(len(reader.code)):
+        assert reader.peek(i) == reader.code[i]
+    assert reader.peek(len(reader.code)) is None
+
 
 def test_consume():
-    lexer = Lexer("test")
-    assert lexer.consume() == "t"
-    assert lexer.consume() == "e"
-    assert lexer.consume() == "s"
-    assert lexer.consume() == "t"
-    assert lexer.consume() == None
+    reader = Reader("test")
+    assert reader.consume() == "t"
+    assert reader.consume() == "e"
+    assert reader.consume() == "s"
+    assert reader.consume() == "t"
+    assert reader.consume() is None
