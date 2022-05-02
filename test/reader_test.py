@@ -12,7 +12,6 @@ def test_peek():
 def test_consume():
     reader = Reader("test")
     assert reader.consume() == "t"  # test -> est
-    assert reader.consume(1) == "s"  # est -> et
-    assert reader.consume() == "e"  # et -> t
+    assert reader.consume(1) == "s"  # est -> t
     assert reader.consume() == "t"  # t -> None
     assert reader.consume() is None
