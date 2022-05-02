@@ -15,16 +15,16 @@ Keywords are words whose meaning has already been defined by the computer - they
 
 <style>table:nth-of-type(1) thead { display: none; }</style>
 
-|            |          |            |            |
-| :--------: | :------: | :--------: | :--------: |
-|   `auto`   | `break`  |   `case`   |   `char`   |
-| `continue` |   `do`   | `default`  |  `const`   |
-|  `double`  |  `else`  |   `enum`   |  `extern`  |
-|   `for`    |   `if`   |   `goto`   |  `float`   |
-|   `int`    |  `long`  | `register` |  `return`  |
-|  `signed`  | `static` |  `sizeof`  |  `short`   |
-|  `struct`  | `switch` | `typedef`  |  `union`   |
-|   `void`   | `while`  | `volatile` | `unsigned` |
+|            |            |            |          |
+| :--------: | :--------: | :--------: | :------: |
+|   `auto`   |  `break`   |   `case`   |  `char`  |
+|  `const`   | `continue` | `default`  |   `do`   |
+|  `double`  |   `else`   |   `enum`   | `extern` |
+|  `float`   |   `for`    |   `goto`   |   `if`   |
+|   `int`    |   `long`   | `register` | `return` |
+|  `short`   |  `signed`  |  `sizeof`  | `static` |
+|  `struct`  |  `switch`  | `typedef`  | `union`  |
+| `unsigned` |   `void`   | `volatile` | `while`  |
 
 For list of keywords in C check [C language reference](https://en.cppreference.com/w/c/keyword)
 
