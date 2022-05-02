@@ -106,9 +106,3 @@ char string[20] = {'s', 't', 'u', 'd', 'y', '\0'};
 char string[20] = "study";
 char string[] = "study";
 ```
-
-### Regular expresion for special characters
-
-```regexp
-\"[^\"]*+*\"
-```
