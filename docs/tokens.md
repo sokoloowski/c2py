@@ -44,7 +44,7 @@ Example: variables, functions, labels, etc.
 ### Regular expresion for identifiers
 
 ```regexp
-^[a-zA-Z][a-zA-Z0-9_]+$
+^[a-zA-Z][a-zA-Z0-9_]*$
 ```
 
 ## Constants
