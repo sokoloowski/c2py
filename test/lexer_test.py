@@ -1,6 +1,5 @@
 from c2py.parser.lexer import Lexer
 from c2py.parser.token import Token
-import lorem
 
 
 def test_peek():
@@ -8,7 +7,7 @@ def test_peek():
         (Token.KEYWORD, "auto"),
         (Token.KEYWORD, "int"),
         (Token.IDENTIFIER, "asdf"),
-        (Token.STRING, f'"{lorem.sentence()}"')
+        (Token.STRING, '"asdf asdf  "')
     ]
     test_string = "   "  # some spaces to test skipping white chars
     for i, j in expected:
@@ -24,7 +23,7 @@ def test_consume():
         (Token.KEYWORD, "auto"),
         (Token.KEYWORD, "int"),
         (Token.IDENTIFIER, "asdf"),
-        (Token.STRING, f'"{lorem.sentence()}"')
+        (Token.STRING, '"asdf asdf  "')
     ]
     test_string = "   "  # some spaces to test skipping white chars
     for i, j in expected:
