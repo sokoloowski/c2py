@@ -13,8 +13,6 @@ Basing on [educative.io](https://www.educative.io/edpresso/what-are-tokens-in-th
 
 Keywords are words whose meaning has already been defined by the computer - they are pre-defined words in the C compiler. Each keyword is meant to perform a specific function in a C program. Keywords are case sensitive and are written in lower case. The C language has 32 keywords, they are:
 
-<style>table:nth-of-type(1) thead { display: none; }</style>
-
 |            |            |            |          |
 | :--------: | :--------: | :--------: | :------: |
 |   `auto`   |  `break`   |   `case`   |  `char`  |
