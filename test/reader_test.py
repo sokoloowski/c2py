@@ -1,4 +1,4 @@
-from c2py.parser import Reader
+from c2py.parser.reader import Reader
 
 
 def test_peek():

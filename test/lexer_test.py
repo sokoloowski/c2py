@@ -1,5 +1,5 @@
-from c2py.parser import Lexer
-from c2py.parser.tokens import Token
+from c2py.parser.lexer import Lexer
+from c2py.parser.token import Token
 
 
 def test_peek():
