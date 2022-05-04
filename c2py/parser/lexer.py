@@ -60,7 +60,7 @@ class Lexer:
         if self.reader.peek(j) == '"':
             res += self.reader.peek(j)
             j += 1
-            while self.reader.peek(j) is not '"':
+            while self.reader.peek(j) != '"':
                 res += self.reader.peek(j)
                 j += 1
             res += self.reader.peek(j)
@@ -97,7 +97,7 @@ class Lexer:
         # Strings
         if self.reader.peek() == '"':
             res += self.reader.consume()
-            while self.reader.peek() is not '"':
+            while self.reader.peek() != '"':
                 res += self.reader.consume()
             res += self.reader.consume()
             return Token.STRING, res
