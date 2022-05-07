@@ -11,10 +11,7 @@
  *  `*` after non-terminal means 0 or more occurrences.  *
  *                                                       *
  *  Moreover, SOURCE_CHAR stands any source character    *
- *  and `-` means exclusion from non-terminal *
- *                                                       *
- *                                                       *
- *                                                       *
+ *  and `-` means exclusion from non-terminal            *
  *                                                       *
  *********************************************************/
 
@@ -34,7 +31,7 @@ PREPROCESSING_TOKEN ::= HEADER_NAME
                       | CHARACTER_CONSTANT
                       | STRING_LITERAL
                       | PUNCTUATOR
-/*                      | each non-white-space character that cannot be one of the above */
+/*                    | each non-white-space character that cannot be one of the above */
                       | SPECIAL_CHAR
                       | "'" | '"' | "\" | ">"
 
