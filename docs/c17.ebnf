@@ -1,0 +1,618 @@
+/*********************************************************
+ *                                                       *
+ *         C17 language grammar in EBNF notation         *
+ *                                                       *
+ *  Non-terminal symbols are written in UPPERCASE.       *
+ *  Terminal symbols are written in quotes.              *
+ *                                                       *
+ *  `|` is used as the alternative symbol.               *
+ *  `?` after non-terminal means 0 or 1 occurrence.      *
+ *  `+` after non-terminal means 1 or more occurrences.  *
+ *  `*` after non-terminal means 0 or more occurrences.  *
+ *                                                       *
+ *  Moreover, SOURCE_CHAR stands any source character    *
+ *  and `-` means exclusion from non-terminal *
+ *                                                       *
+ *                                                       *
+ *                                                       *
+ *                                                       *
+ *********************************************************/
+
+/* Lexical grammar */
+
+/** Lexical elements **/
+
+TOKEN ::= KEYWORD
+        | IDENTIFIER
+        | CONSTANT
+        | STRING_LITERAL
+        | PUNCTUATOR
+
+PREPROCESSING_TOKEN ::= HEADER_NAME
+                      | IDENTIFIER
+                      | PP_NUMBER
+                      | CHARACTER_CONSTANT
+                      | STRING_LITERAL
+                      | PUNCTUATOR
+/*                      | each non-white-space character that cannot be one of the above */
+                      | SPECIAL_CHAR
+                      | "'" | '"' | "\" | ">"
+
+
+/** Keywords **/
+
+KEYWORD ::= "auto" | "break" | "case" | "char"
+          | "const" | "continue" | "default" | "do"
+          | "double" | "else" | "enum" | "extern"
+          | "float" | "for" | "goto" | "if"
+          | "inline" | "int" | "long" | "register"
+          | "restrict" | "return" | "short" | "signed"
+          | "sizeof" | "static" | "struct" | "switch"
+          | "typedef" | "union" | "unsigned" | "void"
+          | "volatile" | "while" | "_Alignas" | "_Alignof"
+          | "_Atomic" | "_Bool" | "_Complex" | "_Generic"
+          | "_Imaginary" | "_Noreturn" | "_Static_assert"
+          | "_Thread_local"
+
+/** Identifiers **/
+
+IDENTIFIER ::= IDENTIFIER_NONDIGIT
+             | IDENTIFIER IDENTIFIER_NONDIGIT
+             | IDENTIFIER DIGIT
+
+IDENTIFIER_NONDIGIT ::= NONDIGIT
+                      | UNIVERSAL_CHARACTER_NAME
+/*                    | other implementation-defined characters */
+
+NONDIGIT ::= "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j"
+           | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t"
+           | "u" | "v" | "w" | "x" | "y" | "z"
+           | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J"
+           | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T"
+           | "U" | "V" | "W" | "X" | "Y" | "Z"
+           | "_"
+
+DIGIT ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+/** Universal character names **/
+
+UNIVERSAL_CHARACTER_NAME ::= "\u" HEX_QUAD
+                           | "\U" HEX_QUAD HEX_QUAD
+
+HEX_QUAD ::= HEXADECIMAL_DIGIT HEXADECIMAL_DIGIT HEXADECIMAL_DIGIT HEXADECIMAL_DIGIT
+
+/** Constants **/
+
+CONSTANT ::= INTEGER_CONSTANT
+           | FLOATING_CONSTANT
+           | ENUMERATION_CONSTANT
+           | CHARACTER_CONSTANT
+
+INTEGER_CONSTANT ::= DECIMAL_CONSTANT INTEGER_SUFFIX?
+                   | OCTAL_CONSTANT INTEGER_SUFFIX?
+                   | HEXADECIMAL_CONSTANT INTEGER_SUFFIX?
+              
+DECIMAL_CONSTANT ::= NONZERO_DIGIT
+                   | DECIMAL_CONSTANT DIGIT
+
+OCTAL_CONSTANT ::= "0"
+                 | OCTAL_CONSTANT OCTAL_DIGIT
+
+HEXADECIMAL_CONSTANT ::= HEXADECIMAL_PREFIX HEXADECIMAL_DIGIT
+                       | HEXADECIMAL_CONSTANT HEXADECIMAL_DIGIT
+                      
+HEXADECIMAL_PREFIX ::= "0x" | "0X"
+
+NONZERO_DIGIT ::= "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+OCTAL_DIGIT ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7"
+
+HEXADECIMAL_DIGIT ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+                    | "a" | "b" | "c" | "d" | "e" | "f"
+                    | "A" | "B" | "C" | "D" | "E" | "F"
+
+INTEGER_SUFFIX ::= UNSIGNED_SUFFIX LONG_SUFFIX?
+                 | UNSIGNED_SUFFIX LONG_LONG_SUFFIX
+                 | LONG_SUFFIX UNSIGNED_SUFFIX?
+                 | LONG_LONG_SUFFIX UNSIGNED_SUFFIX?
+
+UNSIGNED_SUFFIX ::= "u" | "U"
+
+LONG_SUFFIX ::= "l" | "L"
+
+LONG_LONG_SUFFIX ::= "ll" | "LL"
+
+FLOATING_CONSTANT ::= DECIMAL_FLOATING_CONSTANT
+                    | HEXADECIMAL_FLOATING_CONSTANT
+
+DECIMAL_FLOATING_CONSTANT ::= FRACTIONAL_CONSTANT EXPONENT_PART? FLOATING_SUFFIX?
+                            | DIGIT_SEQUNCE EXPONENT_PART FLOATING_SUFFIX?
+
+HEXADECIMAL_FLOATING_CONSTANT ::= HEXADECIMAL_PREFIX HEXADECIMAL_FRACTIONAL_CONSTANT BINARY_EXPONENT_PART FLOATING_SUFFIX?
+                                | HEXADECIMAL_PREFIX HEXADECIMAL_DIGIT_SEQUENCE BINARY_EXPONENT_PART FLOATING_SUFFIX?
+
+FRACTIONAL_CONSTANT ::= DIGIT_SEQUENCE? "." DIGIT_SEQUENCE
+                      | DIGIT_SEQUENCE "."
+
+EXPONENT_PART ::= "e" SIGN? DIGIT_SEQUENCE
+                | "E" SIGN? DIGIT_SEQUENCE
+
+SIGN ::= "+" | "-"
+
+DIGIT_SEQUENCE ::= DIGIT
+                 | DIGIT_SEQUENCE DIGIT
+
+HEXADECIMAL_FRACTIONAL_CONSTANT ::= HEXADECIMAL_DIGIT_SEQUENCE? "." HEXADECIMAL_DIGIT_SEQUENCE
+                                  | HEXADECIMAL_DIGIT_SEQUENCE "."
+
+BINARY_EXPONENT_PART ::= "p" SIGN? DIGIT_SEQUENCE
+                       | "P" SIGN? DIGIT_SEQUENCE
+
+HEXADECIMAL_DIGIT_SEQUENCE ::= HEXADECIMAL_DIGIT
+                             | HEXADECIMAL_DIGIT_SEQUENCE HEXADECIMAL_DIGIT
+
+FLOATING_SUFFIX ::= "f" | "F"
+                  | "l" | "L"
+
+ENUMERATION_CONSTANT ::= IDENTIFIER
+
+/** This is the smallest special char set possible
+ *  Excluded characters:
+ *  - C_CHAR: `'`, `\`
+ *  - S_CHAR: `"`, `\`
+ *  - H_CHAR: `>`
+ *  - Q_CHAR: `"`
+ */
+SPECIAL_CHAR ::= "~" | "!" | "@" | "#" | "$" | "%" | "^" | "&" | "*" | "(" | ")" | "_" | "+"
+               | "`" | "-" | "="
+               | "{" | "}" | "|"
+               | "[" | "]"
+               | ":"
+               | ";"
+               | "<" | "?"
+               | "," | "." | "/" | " "
+
+CHARACTER_CONSTANT ::= "'" C_CHAR_SEQUENCE "'"
+                     | "L'" C_CHAR_SEQUENCE "'"
+                     | "u'" C_CHAR_SEQUENCE "'"
+                     | "U'" C_CHAR_SEQUENCE "'"
+
+C_CHAR_SEQUENCE ::= C_CHAR
+                  | C_CHAR_SEQUENCE C_CHAR
+
+/* any member of the source character set except the single-quote ', backslash \, or new-line character */
+C_CHAR ::= ESCAPE_SEQUENCE
+         | DIGIT
+         | NONDIGIT
+         | SPECIAL_CHAR
+         | '"' | ">"
+
+ESCAPE_SEQUENCE ::= SIMPLE_ESCAPE_SEQUENCE
+                  | OCTAL_ESCAPE_SEQUENCE
+                  | HEXADECIMAL_ESCAPE_SEQUENCE
+                  | UNIVERSAL_CHARACTER_NAME
+
+SIMPLE_ESCAPE_SEQUENCE ::= "\'" | '\"' | "\?" | "\\"
+                         | "\a" | "\b" | "\f" | "\n" | "\r" | "\t" | "\v"
+
+OCTAL_ESCAPE_SEQUENCE ::= "\" OCTAL_DIGIT
+                        | "\" OCTAL_DIGIT OCTAL_DIGIT
+                        | "\" OCTAL_DIGIT OCTAL_DIGIT OCTAL_DIGIT
+
+HEXADECIMAL_ESCAPE_SEQUENCE ::= "\x" HEXADECIMAL_DIGIT
+                              | HEXADECIMAL_ESCAPE_SEQUENCE HEXADECIMAL_DIGIT
+
+/** String literals **/
+
+STRING_LITERAL ::= ENCODING_PREFIX? '"' S_CHAR_SEQUENCE? '"'
+
+ENCODING_PREFIX ::= "u8" | "u" | "U" | "L"
+
+S_CHAR_SEQUENCE ::= S_CHAR
+                  | S_CHAR_SEQUENCE S_CHAR
+
+/* any member of the source character set except the double-quote ", backslash \, or new-line character */
+S_CHAR ::= ESCAPE_SEQUENCE
+         | DIGIT
+         | NONDIGIT
+         | SPECIAL_CHAR
+         | "'" | ">"
+
+/** Punctuators **/
+
+PUNCTUATOR ::= "[" | "]" | "(" | ")" | "{" | "}" | "." | "->"
+             | "++" | "--" | "&" | "*" | "+" | "-" | "~" | "!"
+             | "/" | "%" | "<<" | ">>" | "<" | ">" | "<=" | ">=" | "==" | "!=" | "^" | "|" | "&&" | "||"
+             | "?" | ":" | ";" | "..."
+             | "=" | "*=" | "/=" | "%=" | "+=" | "-=" | "<<=" | ">>=" | "&=" | "^=" | "|="
+             | "," | "#" | "##"
+             | "<:" | ":>" | "<%" | "%>" | "%:" | "%:%:"
+
+/** Header names **/
+
+HEADER_NAME ::= "<" H_CHAR_SEQUENCE ">"
+              | '"' Q_CHAR_SEQUENCE '"'
+
+H_CHAR_SEQUENCE ::= H_CHAR
+                  | H_CHAR_SEQUENCE H_CHAR
+
+/* any member of the source character set except the new-line character and > */
+H_CHAR ::= DIGIT
+         | NONDIGIT
+         | SPECIAL_CHAR
+         | '"' | "'" | "\"
+
+Q_CHAR_SEQUENCE ::= Q_CHAR
+                  | Q_CHAR_SEQUENCE Q_CHAR
+
+/* any member of the source character set except the new-line character and " */
+Q_CHAR ::= DIGIT
+         | NONDIGIT
+         | SPECIAL_CHAR
+         | "'" | "\" | ">"
+
+/** Preprocessing numbers **/
+
+PP_NUMBER ::= DIGIT
+            | "." DIGIT
+            | PP_NUMBER DIGIT
+            | PP_NUMBER IDENTIFIER_NONDIGIT
+            | PP_NUMBER "e" SIGN
+            | PP_NUMBER "E" SIGN
+            | PP_NUMBER "p" SIGN
+            | PP_NUMBER "P" SIGN
+            | PP_NUMBER "."
+
+/* Phrase structure grammar */
+
+/** Expressions **/
+
+PRIMARY_EXPRESSION ::= IDENTIFIER
+                     | CONSTANT
+                     | STRING_LITERAL
+                     | "(" EXPRESSION ")"
+                     | GENERIC_SELECTION
+
+GENERIC_SELECTION ::= "_Generic" "(" ASSIGNMENT_EXPRESSION "," GENERIC_ASSOC_LIST ")"
+
+GENERIC_ASSOC_LIST ::= GENERIC_ASSOCIATION
+                     | GENERIC_ASSOC_LIST "," GENERIC_ASSOCIATION
+
+GENERIC_ASSOCIATION ::= TYPE_NAME ":" ASSIGNMENT_EXPRESSION
+                      | "default" ":" ASSIGNMENT_EXPRESSION
+
+POSTFIX_EXPRESSION ::= PRIMARY_EXPRESSION
+                     | POSTFIX_EXPRESSION "[" EXPRESSION "]"
+                     | POSTFIX_EXPRESSION "(" ARGUMENT_EXPRESSION_LIST? ")"
+                     | POSTFIX_EXPRESSION "." IDENTIFIER
+                     | POSTFIX_EXPRESSION "->" IDENTIFIER
+                     | POSTFIX_EXPRESSION "++"
+                     | POSTFIX_EXPRESSION "-"
+                     | "(" TYPE_NAME ")" "{" INITIALIZER_LIST "}"
+                     | "(" TYPE_NAME ")" "{" INITIALIZER_LIST "," "}"
+
+ARGUMENT_EXPRESSION_LIST ::= ASSIGNMENT_EXPRESSION
+                           | ARGUMENT_EXPRESSION_LIST "," ASSIGNMENT_EXPRESSION
+
+UNARY_EXPRESSION ::= POSTFIX_EXPRESSION
+                   | "++" UNARY_EXPRESSION
+                   | "-" UNARY_EXPRESSION
+                   | UNARY_OPERATOR CAST_EXPRESSION
+                   | "sizeof" UNARY_EXPRESSION
+                   | "sizeof" "(" TYPE_NAME ")"
+                   | "_Alignof" "(" TYPE_NAME ")"
+
+UNARY_OPERATOR ::= "&" | "*" | "+" | "-" | "~" | "!"
+
+CAST_EXPRESSION ::= UNARY_EXPRESSION
+                  | "(" TYPE_NAME ")" CAST_EXPRESSION
+
+MULTIPLICATIVE_EXPRESSION ::= CAST_EXPRESSION
+                            | MULTIPLICATIVE_EXPRESSION "*" CAST_EXPRESSION
+                            | MULTIPLICATIVE_EXPRESSION "/" CAST_EXPRESSION
+                            | MULTIPLICATIVE_EXPRESSION "%" CAST_EXPRESSION
+
+ADDITIVE_EXPRESSION ::= MULTIPLICATIVE_EXPRESSION
+                      | ADDITIVE_EXPRESSION "+" MULTIPLICATIVE_EXPRESSION
+                      | ADDITIVE_EXPRESSION "-" MULTIPLICATIVE_EXPRESSION
+
+SHIFT_EXPRESSION ::= ADDITIVE_EXPRESSION
+                   | SHIFT_EXPRESSION "<<" ADDITIVE_EXPRESSION
+                   | SHIFT_EXPRESSION ">>" ADDITIVE_EXPRESSION
+
+RELATIONAL_EXPRESSION ::= SHIFT_EXPRESSION
+                        | RELATIONAL_EXPRESSION "<" SHIFT_EXPRESSION
+                        | RELATIONAL_EXPRESSION ">" SHIFT_EXPRESSION
+                        | RELATIONAL_EXPRESSION "<=" SHIFT_EXPRESSION
+                        | RELATIONAL_EXPRESSION ">=" SHIFT_EXPRESSION
+
+EQUALITY_EXPRESSION ::= RELATIONAL_EXPRESSION
+                      | EQUALITY_EXPRESSION "==" RELATIONAL_EXPRESSION
+                      | EQUALITY_EXPRESSION "!=" RELATIONAL_EXPRESSION
+
+AND_EXPRESSION ::= EQUALITY_EXPRESSION
+                 | AND_EXPRESSION "&" EQUALITY_EXPRESSION
+
+EXCLUSIVE_OR_EXPRESSION ::= AND_EXPRESSION
+                          | EXCLUSIVE_OR_EXPRESSION "^" AND_EXPRESSION
+
+INCLUSIVE_OR_EXPRESSION ::= EXCLUSIVE_OR_EXPRESSION
+                          | INCLUSIVE_OR_EXPRESSION "|" EXCLUSIVE_OR_EXPRESSION
+
+LOGICAL_AND_EXPRESSION ::= INCLUSIVE_OR_EXPRESSION
+                         | LOGICAL_AND_EXPRESSION "&&" INCLUSIVE_OR_EXPRESSION
+
+LOGICAL_OR_EXPRESSION ::= LOGICAL_AND_EXPRESSION
+                        | LOGICAL_OR_EXPRESSION "||" LOGICAL_AND_EXPRESSION
+
+CONDITIONAL_EXPRESSION ::= LOGICAL_OR_EXPRESSION
+                         | LOGICAL_OR_EXPRESSION "?" EXPRESSION ":" CONDITIONAL_EXPRESSION
+
+ASSIGNMENT_EXPRESSION ::= CONDITIONAL_EXPRESSION
+                        | UNARY_EXPRESSION ASSIGNMENT_OPERATOR ASSIGNMENT_EXPRESSION
+
+ASSIGNMENT_OPERATOR ::= "=" | "*=" | "/=" | "%=" | "+=" | "-=" | "<<=" | ">>=" | "&=" | "^=" | "|="
+
+EXPRESSION ::= ASSIGNMENT_EXPRESSION
+             | EXPRESSION "," ASSIGNMENT_EXPRESSION
+
+CONSTANT_EXPRESSION ::= CONDITIONAL_EXPRESSION
+
+/** Declarations **/
+
+DECLARATION ::= DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST? ";"
+              | STATIC_ASSERT_DECLARATION
+
+DECLARATION_SPECIFIERS ::= STORAGE_CLASS_SPECIFIER DECLARATION_SPECIFIERS?
+                         | TYPE_SPECIFIER DECLARATION_SPECIFIERS?
+                         | TYPE_QUALIFIER DECLARATION_SPECIFIERS?
+                         | FUNCTION_SPECIFIER DECLARATION_SPECIFIERS?
+                         | ALIGNMENT_SPECIFIER DECLARATION_SPECIFIERS?
+
+INIT_DECLARATOR_LIST ::= INIT_DECLARATOR
+                       | INIT_DECLARATOR_LIST "," INIT_DECLARATOR
+
+INIT_DECLARATOR ::= DECLARATOR
+                  | DECLARATOR "=" INITIALIZER
+
+STORAGE_CLASS_SPECIFIER ::= "typedef"
+                          | "extern"
+                          | "static"
+                          | "_Thread_local"
+                          | "auto"
+                          | "register"
+
+TYPE_SPECIFIER ::= "void"
+                 | "char"
+                 | "short"
+                 | "int"
+                 | "long"
+                 | "float"
+                 | "double"
+                 | "signed"
+                 | "unsigned"
+                 | "_Bool"
+                 | "_Complex"
+                 | ATOMIC_TYPE_SPECIFIER
+                 | STRUCT_OR_UNION_SPECIFIER
+                 | ENUM_SPECIFIER
+                 | TYPEDEF_NAME
+
+STRUCT_OR_UNION_SPECIFIER ::= STRUCT_OR_UNION IDENTIFIER? "{" STRUCT_DECLARATION_LIST "}"
+                            | STRUCT_OR_UNION IDENTIFIER
+
+STRUCT_OR_UNION ::= "struct"
+                  | "union"
+
+STRUCT_DECLARATION_LIST ::= STRUCT_DECLARATION
+                          | STRUCT_DECLARATION_LIST STRUCT_DECLARATION
+
+STRUCT_DECLARATION ::= SPECIFIER_QUALIFIER_LIST STRUCT_DECLARATOR_LIST? ";"
+                     | STATIC_ASSERT_DECLARATION
+
+SPECIFIER_QUALIFIER_LIST ::= TYPE_SPECIFIER SPECIFIER_QUALIFIER_LIST?
+                           | TYPE_QUALIFIER SPECIFIER_QUALIFIER_LIST?
+                           | ALIGNMENT_SPECIFIER SPECIFIER_QUALIFIER_LIST?
+
+STRUCT_DECLARATOR_LIST ::= STRUCT_DECLARATOR
+                         | STRUCT_DECLARATOR_LIST "," STRUCT_DECLARATOR
+
+STRUCT_DECLARATOR ::= DECLARATOR
+                    | DECLARATOR? ":" CONSTANT_EXPRESSION
+
+ENUM_SPECIFIER ::= "enum" IDENTIFIER? "{" ENUMERATOR_LIST "}"
+                 | "enum" IDENTIFIER? "{" ENUMERATOR_LIST "," "}"
+                 | "enum" IDENTIFIER
+
+ENUMERATOR_LIST ::= ENUMERATOR
+                  | ENUMERATOR_LIST "," ENUMERATOR
+
+ENUMERATOR ::= ENUMERATION_CONSTANT
+             | ENUMERATION_CONSTANT "=" CONSTANT_EXPRESSION
+
+ATOMIC_TYPE_SPECIFIER ::= "_Atomic" "(" TYPE_NAME ")"
+
+TYPE_QUALIFIER ::= "const"
+                 | "restrict"
+                 | "volatile"
+                 | "_Atomic"
+
+FUNCTION_SPECIFIER ::= "inline"
+                     | "_Noreturn"
+
+ALIGNMENT_SPECIFIER ::= "_Alignas" "(" TYPE_NAME ")"
+                      | "_Alignas" "(" CONSTANT_EXPRESSION ")"
+
+DECLARATOR ::= POINTER? DIRECT_DECLARATOR
+
+DIRECT_DECLARATOR ::= IDENTIFIER
+                    | "(" DECLARATOR ")"
+                    | DIRECT_DECLARATOR "[" TYPE_QUALIFIER_LIST? ASSIGNMENT_EXPRESSION? "]"
+                    | DIRECT_DECLARATOR "[" "static" TYPE_QUALIFIER_LIST? ASSIGNMENT_EXPRESSION "]"
+                    | DIRECT_DECLARATOR "[" TYPE_QUALIFIER_LIST "static" ASSIGNMENT_EXPRESSION "]"
+                    | DIRECT_DECLARATOR "[" TYPE_QUALIFIER_LIST? "*" "]"
+                    | DIRECT_DECLARATOR "(" PARAMETER_TYPE_LIST ")"
+                    | DIRECT_DECLARATOR "(" IDENTIFIER_LIST? ")"
+
+POINTER ::= "*" TYPE_QUALIFIER_LIST?
+          | "*" TYPE_QUALIFIER_LIST? POINTER
+
+TYPE_QUALIFIER_LIST ::= TYPE_QUALIFIER
+                      | TYPE_QUALIFIER_LIST TYPE_QUALIFIER
+
+PARAMETER_TYPE_LIST ::= PARAMETER_LIST
+                      PARAMETER_LIST "," "..."
+
+PARAMETER_LIST ::= PARAMETER_DECLARATION
+                 | PARAMETER_LIST "," PARAMETER_DECLARATION
+
+PARAMETER_DECLARATION ::= DECLARATION_SPECIFIERS DECLARATOR
+                        | DECLARATION_SPECIFIERS ABSTRACT_DECLARATOR?
+
+IDENTIFIER_LIST ::= IDENTIFIER
+                  | IDENTIFIER_LIST "," IDENTIFIER
+
+TYPE_NAME ::= SPECIFIER_QUALIFIER_LIST ABSTRACT_DECLARATOR?
+
+ABSTRACT_DECLARATOR ::= POINTER
+                      | POINTER? DIRECT_ABSTRACT_DECLARATOR
+
+DIRECT_ABSTRACT_DECLARATOR ::= "(" ABSTRACT_DECLARATOR ")"
+                             | DIRECT_ABSTRACT_DECLARATOR? "[" TYPE_QUALIFIER_LIST? ASSIGNMENT_EXPRESSION? "]"
+                             | DIRECT_ABSTRACT_DECLARATOR? "[" "static" TYPE_QUALIFIER_LIST? ASSIGNMENT_EXPRESSION "]"
+                             | DIRECT_ABSTRACT_DECLARATOR? "[" TYPE_QUALIFIER_LIST "static" ASSIGNMENT_EXPRESSION "]"
+                             | DIRECT_ABSTRACT_DECLARATOR? "[" "*" "]"
+                             | DIRECT_ABSTRACT_DECLARATOR? "(" PARAMETER_TYPE_LIST? ")"
+
+TYPEDEF_NAME ::= IDENTIFIER
+
+INITIALIZER_LIST ::= DESIGNATION? INITIALIZER
+                   | INITIALIZER_LIST "," DESIGNATION? INITIALIZER
+
+DESIGNATION ::= DESIGNATOR_LIST "="
+
+DESIGNATOR_LIST ::= DESIGNATOR
+                  | DESIGNATOR_LIST DESIGNATOR
+
+DESIGNATOR ::= "[" CONSTANT_EXPRESSION "]"
+             | "." IDENTIFIER
+
+STATIC_ASSERT_DECLARATION ::= "_Static_assert" "(" CONSTANT_EXPRESSION "," STRING_LITERAL ")" ";"
+
+/** Statements **/
+
+STATEMENT ::= LABELED_STATEMENT
+            | COMPOUND_STATEMENT
+            | EXPRESSION_STATEMENT
+            | SELECTION_STATEMENT
+            | ITERATION_STATEMENT
+            | JUMP_STATEMENT
+
+LABELED_STATEMENT ::= IDENTIFIER ":" STATEMENT
+                    | "case" CONSTANT_EXPRESSION ":" STATEMENT
+                    | "default" ":" STATEMENT
+
+COMPOUND_STATEMENT ::= "{" BLOCK_ITEM_LIST? "}"
+
+BLOCK_ITEM_LIST ::= BLOCK_ITEM
+                  | BLOCK_ITEM_LIST BLOCK_ITEM
+
+BLOCK_ITEM ::= DECLARATION
+             | STATEMENT
+
+EXPRESSION_STATEMENT ::= EXPRESSION? ";"
+
+SELECTION_STATEMENT ::= "if" "(" EXPRESSION ")" STATEMENT
+                      | "if" "(" EXPRESSION ")" STATEMENT "else" STATEMENT
+                      | "switch" "(" EXPRESSION ")" STATEMENT
+
+ITERATION_STATEMENT ::= "while" "(" EXPRESSION ")" STATEMENT
+                      | "do" STATEMENT "while" "(" EXPRESSION ")" ";"
+                      | "for" "(" EXPRESSION? ";" EXPRESSION? ";" EXPRESSION? ")" STATEMENT
+                      | "for" "(" DECLARATION EXPRESSION? ";" EXPRESSION? ")" STATEMENT
+
+JUMP_STATEMENT ::= "goto" IDENTIFIER ";"
+                 | "continue" ";"
+                 | "break" ";"
+                 | "return" EXPRESSION? ";"
+
+/** External definitions **/
+
+TRANSLATION_UNIT ::= EXTERNAL_DECLARATION
+                   | TRANSLATION_UNIT EXTERNAL_DECLARATION
+
+EXTERNAL_DECLARATION ::= FUNCTION_DEFINITION
+                       | DECLARATION
+
+FUNCTION_DEFINITION ::= DECLARATION_SPECIFIERS DECLARATOR DECLARATION_LIST? COMPOUND_STATEMENT
+
+DECLARATION_LIST ::= DECLARATION
+                   | DECLARATION_LIST DECLARATION
+
+/** Preprocessing directives **/
+
+PREPROCESSING_FILE ::= GROUP?
+
+GROUP ::= GROUP_PART
+        | GROUP GROUP_PART
+
+GROUP_PART ::= IF_SECTION
+             | CONTROL_LINE
+             | TEXT_LINE
+             | "#" NON_DIRECTIVE
+
+IF_SECTION ::= IF_GROUP ELIF_GROUPS? ELSE_GROUP? ENDIF_LINE
+
+IF_GROUP ::= "#" "if" CONSTANT_EXPRESSION NEW_LINE GROUP?
+           | "#" "ifdef" IDENTIFIER NEW_LINE GROUP?
+           | "#" "ifndef" IDENTIFIER NEW_LINE GROUP?
+
+ELIF_GROUPS ::= ELIF_GROUP
+              | ELIF_GROUPS ELIF_GROUP
+
+ELIF_GROUP ::= "#" "elif" CONSTANT_EXPRESSION NEW_LINE GROUP?
+
+ELSE_GROUP ::= "#" "else" NEW_LINE GROUP?
+
+ENDIF_LINE ::= "#" "endif" NEW_LINE
+
+CONTROL_LINE ::= "#" "include" PP_TOKENS NEW_LINE
+               | "#" "define" IDENTIFIER REPLACEMENT_LIST NEW_LINE
+               | "#" "define" IDENTIFIER LPAREN IDENTIFIER_LIST? ")" REPLACEMENT_LIST NEW_LINE
+               | "#" "define" IDENTIFIER LPAREN "..." ")" REPLACEMENT_LIST NEW_LINE
+               | "#" "undef" IDENTIFIER NEW_LINE
+               | "#" "line" PP_TOKENS NEW_LINE
+               | "#" "error" PP_TOKENS? NEW_LINE
+               | "#" "pragma" PP_TOKENS? NEW_LINE
+               | "#" NEW_LINE
+
+TEXT_LINE ::= PP_TOKENS? NEW_LINE
+
+NON_DIRECTIVE ::= PP_TOKENS NEW_LINE
+
+LPAREN ::= "(" /* a ( character not immediately preceded by white-space */
+
+REPLACEMENT_LIST ::= PP_TOKENS?
+
+PP_TOKENS ::= PREPROCESSING_TOKEN
+            | PP_TOKENS PREPROCESSING_TOKEN
+
+NEW_LINE ::= #xA /* the new-line character */
+
+ON_OFF_SWITCH ::= "ON" | "OFF" | "DEFAULT"
+
+/* Floating-point subject sequence */
+
+/** NaN char sequence **/
+
+N_CHAR_SEQUENCE ::= DIGIT
+                  | NONDIGIT
+                  | N_CHAR_SEQUENCE DIGIT
+                  | N_CHAR_SEQUENCE NONDIGIT
+
+/** NaN wchar sequence **/
+
+N_WCHAR_SEQUENCE ::= DIGIT
+                   | NONDIGIT
+                   | N_WCHAR_SEQUENCE DIGIT
+                   | N_WCHAR_SEQUENCE NONDIGIT
