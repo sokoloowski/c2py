@@ -1,15 +1,14 @@
 import os
 import sys
 from antlr4 import *
-from c_antlr.CLexer import CLexer
-from c_antlr.CListener import CListener
-from c_antlr.CParser import CParser
+from CLexer import CLexer
+from CParser import CParser
 
 
 if __name__ == "__main__":
     # Check for filepath argument
     if len(sys.argv) == 1:
-        print("Usage: python c2py <filepath>")
+        print("Usage: python . <filepath>")
         exit(1)
 
     # Prepare filepath and filename
