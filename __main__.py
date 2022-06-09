@@ -16,6 +16,7 @@ if __name__ == "__main__":
     # Prepare filepath and filename
     filepath = sys.argv[1]
     filename = filepath[filepath.rfind("/") + 1:]
+    filename = filepath[filepath.rfind("\\") + 1:]
 
     # Check if file exists
     if not os.path.isfile(filepath):
@@ -38,7 +39,7 @@ if __name__ == "__main__":
     # # Save output to file
     # if not os.path.exists("output"):
     #     os.makedirs("output")
-    # f = open(f"output/{filename}.tree", "w")
-    # f.write(tree.toStringTree(recog=parser))
+    # f = open(f"output/{filename}.py", "w")
+    # f.write(output)
     # f.close()
-    # print(f"Saved tree to output/{filename}.tree")
+    # print(f"Saved output to output/{filename}.py")
