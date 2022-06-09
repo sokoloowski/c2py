@@ -11,7 +11,14 @@ class CVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CParser#primaryExpression.
     def visitPrimaryExpression(self, ctx:CParser.PrimaryExpressionContext):
-        return self.visitChildren(ctx)
+        res = ""
+        for child in ctx.children:
+            if child.getChildCount() == 0:
+                res += child.getText()
+            else:
+                res += self.visit(child)
+        print(res)
+        return res
 
 
     # Visit a parse tree produced by CParser#genericSelection.
@@ -31,7 +38,13 @@ class CVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CParser#postfixExpression.
     def visitPostfixExpression(self, ctx:CParser.PostfixExpressionContext):
-        return self.visitChildren(ctx)
+        res = ""
+        for child in ctx.children:
+            if child.getChildCount() == 0:
+                res += child.getText()
+            else:
+                res += self.visit(child)
+        return res
 
 
     # Visit a parse tree produced by CParser#argumentExpressionList.
@@ -166,7 +179,13 @@ class CVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CParser#typeSpecifier.
     def visitTypeSpecifier(self, ctx:CParser.TypeSpecifierContext):
-        return self.visitChildren(ctx)
+        res = ""
+        for child in ctx.children:
+            if child.getChildCount() == 0:
+                res += child.getText()
+            else:
+                res += self.visit(child)
+        return res
 
 
     # Visit a parse tree produced by CParser#structOrUnionSpecifier.
@@ -251,7 +270,13 @@ class CVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CParser#directDeclarator.
     def visitDirectDeclarator(self, ctx:CParser.DirectDeclaratorContext):
-        return self.visitChildren(ctx)
+        res = ""
+        for child in ctx.children:
+            if child.getChildCount() == 0:
+                res += child.getText()
+            else:
+                res += self.visit(child)
+        return res
 
 
     # Visit a parse tree produced by CParser#vcSpecificModifer.
@@ -376,7 +401,13 @@ class CVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CParser#compoundStatement.
     def visitCompoundStatement(self, ctx:CParser.CompoundStatementContext):
-        return self.visitChildren(ctx)
+        res = ""
+        for child in ctx.children:
+            if child.getChildCount() == 0:
+                res += child.getText()
+            else:
+                res += self.visit(child)
+        return res
 
 
     # Visit a parse tree produced by CParser#blockItemList.
@@ -391,7 +422,14 @@ class CVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CParser#expressionStatement.
     def visitExpressionStatement(self, ctx:CParser.ExpressionStatementContext):
-        return self.visitChildren(ctx)
+        res = ""
+        for child in ctx.children:
+            if child.getChildCount() == 0:
+                res += child.getText()
+            else:
+                res += self.visit(child)
+        print(res)
+        return res
 
 
     # Visit a parse tree produced by CParser#selectionStatement.
@@ -421,7 +459,13 @@ class CVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CParser#jumpStatement.
     def visitJumpStatement(self, ctx:CParser.JumpStatementContext):
-        return self.visitChildren(ctx)
+        res = ""
+        for child in ctx.children:
+            if child.getChildCount() == 0:
+                res += child.getText()
+            else:
+                res += self.visit(child)
+        return res
 
 
     # Visit a parse tree produced by CParser#compilationUnit.
