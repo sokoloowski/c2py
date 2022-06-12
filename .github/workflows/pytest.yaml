@@ -10,7 +10,6 @@ jobs:
           python-version: '3.x'
       - name: Install Dependencies
         run: |
-          pip install pytest
-          pip install antlr4-python3-runtime
+          pip install -e .
       - name: Execute tests
         run: pytest
