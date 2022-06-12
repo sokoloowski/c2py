@@ -34,7 +34,7 @@ pip install antlr4-python3-runtime
 ```
 
 ## Informacje o zastosowanych metodach i algorytmach
-_Do uzupełnienia_
+<span style="color:red;">_**Do uzupełnienia**_</span>
 ## Krótka instrukcja obsługi
 ### Uruchomienie
 
@@ -55,7 +55,10 @@ python output/helloworld.c.py
 W celu przetestowania naszej aplikacji zostały napisane testy automatyczne przy użyciu `pytest`. Znajdują się one w folderze `test`. Aby je uruchomić, należy wpisać polecenie:
 ```bash
 pytest
-```
+```  
+  
+<span style="color:red;">_**Należy opisać testy!!!**_ </span> 
+  
 Przykłady znajdują się w folderze `examples`:
 - **errors** : programy, które zawierają błędy składniowe
 - **if_statements** : programy z wykorzystaniem wyrażeń warunkowych
@@ -68,4 +71,4 @@ oraz dodatkowo:
 W przyszłości planujemy rozszerzyć działanie programu o współpracę z plikami oraz rozszerzyć jego działanie dla niektórych funkcji z bibliotek "math.h".
 
 ## Ograniczenia programu
-C2Py działa tylko dla prostych definicji funkcji z wykorzystaniem wyrażeń warunkowych, pętli oraz funkcji "printf". Dodatkowo, działa on tylko dla biblioteki "stdio.h". Kolejnym ograniczeniem jest konieczność używania klamer przy instrukcjach warunkowych oraz pętlach ze względu na wcięcia, które należy brać pod uwagę w języku Python. Przyjęliśmy również uproszczenie i każdą pętlę zamieniamy na pętlę _while_.
+C2Py działa tylko dla prostych definicji funkcji z wykorzystaniem wyrażeń warunkowych, pętli oraz funkcji "printf". Dodatkowo, działa on tylko dla biblioteki "stdio.h". Kolejnym ograniczeniem jest konieczność używania klamer przy instrukcjach warunkowych oraz pętlach ze względu na wcięcia, które należy brać pod uwagę w języku Python. Przyjęliśmy również uproszczenie, że każdą pętlę zamieniamy na pętlę _while_.
