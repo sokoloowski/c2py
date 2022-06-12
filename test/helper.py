@@ -5,8 +5,10 @@ import sys
 
 def run_example(example_name: str) -> str:
     code = c2py_main(f"examples/{example_name}.c")
-    output = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True)
+    output = subprocess.run([sys.executable, "-c", code],
+                            capture_output=True, text=True)
     return output.stdout
+
 
 def generate_list(to: int, separator: str, ending=None) -> str:
     if ending is None:
