@@ -15,12 +15,10 @@ class CVisitor(ParseTreeVisitor):
         res = ""
         for child in ctx.children:
             if child.getChildCount() == 0:
-                txt = child.getText()
-                if txt == "printf":
-                    txt = "print"
-                res += txt
+                res += child.getText()
             else:
                 res += self.visit(child)
+                
         return res
 
 
@@ -60,11 +58,20 @@ class CVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by CParser#postfixExpression.
     def visitPostfixExpression(self, ctx:CParser.PostfixExpressionContext):
         res = ""
-        for child in ctx.children:
+        children = ctx.children
+
+        for child in children:
             if child.getChildCount() == 0:
                 res += child.getText()
             else:
                 res += self.visit(child)
+
+        # printf(format, ...items) is a special case
+        # in Python it would be print(format % *items)
+        # so we need to handle it here
+        if children[0].getText() == "printf":
+            return res.replace("printf", "print").replace('",', '"%', 1)
+
         return res
 
 
@@ -280,9 +287,6 @@ class CVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by CParser#declaration.
     def visitDeclaration(self, ctx:CParser.DeclarationContext):
         res = ""
-        print(ctx.getText()[-1])
-        if ctx.getText()[-1] != ";":
-            raise Exception("Declaration must end with ';'")
         for child in ctx.children:
             if child.getChildCount() == 0:
                 txt = child.getText()
@@ -884,23 +888,37 @@ class CVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CParser#iterationStatement.
     def visitIterationStatement(self, ctx:CParser.IterationStatementContext):
-        res = ""
-        for child in ctx.children:
-            if child.getChildCount() == 0:
-                res += child.getText()
-            else:
-                res += self.visit(child)
-        return res
+        res = "while "
+        for_operations = []
+        children = ctx.children
+        stmt = self.visit(ctx.statement()).strip()
+        
+        if children[0].getText() == "for":
+            """for loop"""
+            for_operations = self.visit(ctx.forCondition())
+            res = for_operations[0] + "\n" + ("\t" * self.indent) + res
+            res += for_operations[1] # 1st element is the condition
+            stmt += "\n" + ("\t" * (self.indent + 1)) + for_operations[2] # 2nd element is the increment
+        elif children[0].getText() == "while":
+            """while loop"""
+            res += self.visit(ctx.expression())
+        elif children[0].getText() == "do":
+            """do-while loop"""
+            res += self.visit(ctx.expression())
+            stmt += "\n" + ("\t" * (self.indent + 1))
+
+        stmt += "\n" + ("\t" * self.indent)
+        res += stmt
+
+        return res.replace("++", "+=1").replace("--", "-=1")
 
 
     # Visit a parse tree produced by CParser#forCondition.
     def visitForCondition(self, ctx:CParser.ForConditionContext):
-        res = ""
+        res = []
         for child in ctx.children:
-            if child.getChildCount() == 0:
-                res += child.getText()
-            else:
-                res += self.visit(child)
+            if child.getChildCount() > 0:
+                res.append(self.visit(child))
         return res
 
 
