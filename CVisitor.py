@@ -73,7 +73,9 @@ class CVisitor(ParseTreeVisitor):
         # in Python it would be print(format % *items)
         # so we need to handle it here
         if children[0].getText() == "printf":
-            return res.replace("printf", "print").replace('",', '"%', 1)
+            res = res.replace("printf", "print")
+            if children[2].getText().find('",') != -1:
+                return res.replace('",', '"%(', 1).replace(')', '))')
 
         return res
 
