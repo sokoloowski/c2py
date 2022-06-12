@@ -35,7 +35,8 @@ if __name__ == "__main__":
     # Save output to file
     if not os.path.exists("output"):
         os.makedirs("output")
+    note = f"# Generated from {filepath} with C2Py"
     f = open(f"output/{filename}.py", "w")
-    f.write(output)
+    f.write(f"{note}\n{output}")
     f.close()
     print(f"Saved output to output/{filename}.py")
