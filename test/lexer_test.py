@@ -28,13 +28,13 @@ def parse(whitechar: str) -> None:
     os.remove(tmp_file)
 
 def test_helloworld_unix_new_lines():
-    for i in range(100):
+    for i in range(10):
         parse("\n" * (i + 1))
 
 def test_helloworld_windows_new_lines():
-    for i in range(100):
+    for i in range(10):
         parse("\r\n" * (i + 1))
 
 def test_helloworld_spaces():
-    for i in range(100):
+    for i in range(10):
         parse(" " * (i + 1))
