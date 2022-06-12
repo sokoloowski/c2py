@@ -280,9 +280,14 @@ class CVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by CParser#declaration.
     def visitDeclaration(self, ctx:CParser.DeclarationContext):
         res = ""
+        print(ctx.getText()[-1])
+        if ctx.getText()[-1] != ";":
+            raise Exception("Declaration must end with ';'")
         for child in ctx.children:
             if child.getChildCount() == 0:
-                res += child.getText()
+                txt = child.getText()
+                if txt == ";":
+                    res += "\n" + ("\t" * self.indent)
             else:
                 res += self.visit(child)
         return res
@@ -356,7 +361,11 @@ class CVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CParser#typeSpecifier.
     def visitTypeSpecifier(self, ctx:CParser.TypeSpecifierContext):
-        return ""
+        res = ""
+        for child in ctx.children:
+            if child.getChildCount() > 0:
+                res += self.visit(child)
+        return res
 
 
     # Visit a parse tree produced by CParser#structOrUnionSpecifier.
