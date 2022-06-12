@@ -6,6 +6,16 @@ from CParser import CParser
 from CVisitor import CVisitor
 
 
+def main(filepath):
+    input_stream = FileStream(filepath)
+    lexer = CLexer(input_stream)
+    stream = CommonTokenStream(lexer)
+    parser = CParser(stream)
+
+    tree = parser.compilationUnit()
+    visitor = CVisitor()
+    return visitor.visit(tree)
+
 if __name__ == "__main__":
     # Check for filepath argument
     if len(sys.argv) == 1:
@@ -22,15 +32,7 @@ if __name__ == "__main__":
         exit(1)
 
     # Run lexer and parser
-    input_stream = FileStream(filepath)
-    lexer = CLexer(input_stream)
-    stream = CommonTokenStream(lexer)
-    parser = CParser(stream)
-
-    tree = parser.compilationUnit()
-    visitor = CVisitor()
-    output = visitor.visit(tree)
-    print(output)
+    output = main(filepath)
 
     # Save output to file
     if not os.path.exists("output"):
