@@ -971,7 +971,7 @@ class CVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CParser#compilationUnit.
     def visitCompilationUnit(self, ctx:CParser.CompilationUnitContext):
-        return self.visitChildren(ctx.translationUnit())[:-3] + "\nmain()\n"
+        return self.visit(ctx.translationUnit())[:-3] + "\nmain()\n"
 
 
     # Visit a parse tree produced by CParser#translationUnit.
@@ -1005,7 +1005,6 @@ class CVisitor(ParseTreeVisitor):
             else:
                 res += self.visit(child)
         return f"def {res}"
-
 
     # Visit a parse tree produced by CParser#declarationList.
     def visitDeclarationList(self, ctx:CParser.DeclarationListContext):
