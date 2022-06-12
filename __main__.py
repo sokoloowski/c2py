@@ -2,7 +2,6 @@ import os
 import sys
 from antlr4 import *
 from CLexer import CLexer
-from CListener import CListener
 from CParser import CParser
 from CVisitor import CVisitor
 
@@ -27,10 +26,8 @@ if __name__ == "__main__":
     lexer = CLexer(input_stream)
     stream = CommonTokenStream(lexer)
     parser = CParser(stream)
+
     tree = parser.compilationUnit()
-    # printer = CListener()
-    # walker = ParseTreeWalker()
-    # walker.walk(printer, tree)
     visitor = CVisitor()
     output = visitor.visit(tree)
     print(output)
