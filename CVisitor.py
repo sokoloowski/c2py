@@ -15,10 +15,12 @@ class CVisitor(ParseTreeVisitor):
         res = ""
         for child in ctx.children:
             if child.getChildCount() == 0:
-                txt = child.getText()
-                if txt == "printf":
-                    txt = "print"
-                res += txt
+                prim_expr = child.getText()
+                if prim_expr in ["true", "false"]:
+                    prim_expr[0] = prim_expr[0].upper()
+                elif prim_expr == "printf":
+                    prim_expr = "print"
+                res += prim_expr
             else:
                 res += self.visit(child)
         return res
@@ -205,7 +207,11 @@ class CVisitor(ParseTreeVisitor):
         res = ""
         for child in ctx.children:
             if child.getChildCount() == 0:
-                res += child.getText()
+                text = child.getText()
+                if text == "&&":
+                    res += " and "
+                else:
+                    res += child.getText()
             else:
                 res += self.visit(child)
         return res
@@ -216,7 +222,11 @@ class CVisitor(ParseTreeVisitor):
         res = ""
         for child in ctx.children:
             if child.getChildCount() == 0:
-                res += child.getText()
+                text = child.getText()
+                if text == "||":
+                    res += " or "
+                else:
+                    res += child.getText()
             else:
                 res += self.visit(child)
         return res
@@ -879,7 +889,7 @@ class CVisitor(ParseTreeVisitor):
                 res += child.getText()
             else:
                 res += self.visit(child)
-        return res
+        return res.replace("elseif","elif")
 
 
     # Visit a parse tree produced by CParser#iterationStatement.
