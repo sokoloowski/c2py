@@ -1,5 +1,6 @@
 import os
-import sys
+import argparse
+import autopep8
 from antlr4 import *
 from CLexer import CLexer
 from CParser import CParser
@@ -16,14 +17,19 @@ def main(filepath):
     visitor = CVisitor()
     return visitor.visit(tree)
 
+
 if __name__ == "__main__":
-    # Check for filepath argument
-    if len(sys.argv) == 1:
-        print("Usage: python . <filepath>")
-        exit(1)
+    parser = argparse.ArgumentParser(
+        prog="C2Py", description="C2Py is a tool to convert C code to Python code.")
+    parser.add_argument("path", metavar="path", type=str,
+                        nargs=1, help="path to source code in C")
+    parser.add_argument("-o", "--output", metavar="dir", type=str,
+                        nargs=1, default=["output"], help="specifies the output directory")
+
+    args = parser.parse_args()
 
     # Prepare filepath and filename
-    filepath = sys.argv[1].replace("\\", "/")
+    filepath = args.path[0].replace("\\", "/")
     filename = filepath[filepath.rfind("/") + 1:]
 
     # Check if file exists
@@ -32,13 +38,14 @@ if __name__ == "__main__":
         exit(1)
 
     # Run lexer and parser
+    print("Translating...")
     output = main(filepath)
 
     # Save output to file
-    if not os.path.exists("output"):
-        os.makedirs("output")
+    if not os.path.exists(args.output[0]):
+        os.makedirs(args.output[0])
     note = f"# Generated from {filepath} with C2Py"
-    f = open(f"output/{filename}.py", "w")
+    f = open(f"{args.output[0]}/{filename}.py", "w")
     f.write(f"{note}\n{output}")
     f.close()
-    print(f"Saved output to output/{filename}.py")
+    print(f"Saved translated code to `{args.output[0]}/{filename}.py`")
