@@ -7,6 +7,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         "antlr4-python3-runtime",
+        "autopep8",
         "pytest"
     ]
 )

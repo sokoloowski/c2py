@@ -25,6 +25,8 @@ if __name__ == "__main__":
                         nargs=1, help="path to source code in C")
     parser.add_argument("-o", "--output", metavar="dir", type=str,
                         nargs=1, default=["output"], help="specifies the output directory")
+    parser.add_argument("-f", "--format", action="store_true",
+                        help="format the output using PEP8 code style")
 
     args = parser.parse_args()
 
@@ -40,6 +42,9 @@ if __name__ == "__main__":
     # Run lexer and parser
     print("Translating...")
     output = main(filepath)
+    if args.format:
+        print("Formatting...")
+        output = autopep8.fix_code(output)
 
     # Save output to file
     if not os.path.exists(args.output[0]):
