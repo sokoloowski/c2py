@@ -3,6 +3,8 @@
 Konwerter C do Pythona
 
 [![pytest](https://github.com/agh-c2py/c2py/actions/workflows/pytest.yaml/badge.svg)](https://github.com/agh-c2py/c2py/actions/workflows/pytest.yaml)
+[![GitHub top language](https://img.shields.io/github/languages/top/agh-c2py/c2py)](https://github.com/agh-c2py/c2py/search?l=python)
+[![PEP8](https://img.shields.io/badge/code%20style-pep8-blue.svg)](https://www.python.org/dev/peps/pep-0008/)
 
 ## Autorzy
 
