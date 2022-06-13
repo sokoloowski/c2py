@@ -23,7 +23,7 @@ if __name__ == "__main__":
         exit(1)
 
     # Prepare filepath and filename
-    filepath = sys.argv[1]
+    filepath = sys.argv[1].replace("\\", "/")
     filename = filepath[filepath.rfind("/") + 1:]
 
     # Check if file exists
