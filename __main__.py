@@ -20,7 +20,7 @@ def translate(filepath):
 
 def main():
     parser = argparse.ArgumentParser(
-        prog="C2Py", description="C2Py is a tool to convert C code to Python code.")
+        prog="c2py", description="C2Py is a tool to convert C code to Python code.")
     parser.add_argument("path", metavar="path", type=str,
                         nargs=1, help="path to source code in C")
     parser.add_argument("-o", "--output", metavar="dir", type=str,
