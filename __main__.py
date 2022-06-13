@@ -41,7 +41,7 @@ def main():
 
     # Run lexer and parser
     print("Translating...")
-    output = main(filepath)
+    output = translate(filepath)
     if args.format:
         print("Formatting...")
         output = autopep8.fix_code(output)
