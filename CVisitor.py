@@ -75,7 +75,9 @@ class CVisitor(ParseTreeVisitor):
         if children[0].getText() == "printf":
             res = res.replace("printf", "print")
             if children[2].getText().find('",') != -1:
-                return res.replace('",', '"%(', 1).replace(')', '))')
+                res = res.replace('",', '"%(', 1).replace(')', '))')
+            # Make print work like printf - do not add newline
+            res = res[:-1] + ',end="")'
 
         return res
 
