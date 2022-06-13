@@ -1,10 +1,10 @@
-from ..__main__ import main as c2py_main
+from ..__main__ import translate
 import subprocess
 import sys
 
 
 def run_example(example_name: str) -> str:
-    code = c2py_main(f"examples/{example_name}.c")
+    code = translate(f"examples/{example_name}.c")
     output = subprocess.run([sys.executable, "-c", code],
                             capture_output=True, text=True)
     return output.stdout

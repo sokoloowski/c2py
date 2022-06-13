@@ -7,7 +7,7 @@ from CParser import CParser
 from CVisitor import CVisitor
 
 
-def main(filepath):
+def translate(filepath):
     input_stream = FileStream(filepath)
     lexer = CLexer(input_stream)
     stream = CommonTokenStream(lexer)
@@ -18,7 +18,7 @@ def main(filepath):
     return visitor.visit(tree)
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(
         prog="C2Py", description="C2Py is a tool to convert C code to Python code.")
     parser.add_argument("path", metavar="path", type=str,
@@ -54,3 +54,7 @@ if __name__ == "__main__":
     f.write(f"{note}\n{output}")
     f.close()
     print(f"Saved translated code to `{args.output[0]}/{filename}.py`")
+
+
+if __name__ == "__main__":
+    main()
