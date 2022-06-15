@@ -20,8 +20,7 @@ class CVisitor(ParseTreeVisitor):
                     prim_expr[0] = prim_expr[0].upper()
                 res += prim_expr
             else:
-                res += self.visit(child)
-                
+                res += self.visit(child)               
         return res
 
 

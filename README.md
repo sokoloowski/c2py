@@ -45,7 +45,49 @@ pip install antlr4-python3-runtime
 
 ## Informacje o zastosowanych metodach i algorytmach
 
-<span style="color:red;">_**Do uzupełnienia**_</span>
+<span style="color:red;">_**Do weryfikacji**_</span>  
+W celu wygenerowania kodu wykorzystaliśmy klasę CVisitor. Wygenerowane przez [ANTLR 4](https://github.com/antlr/antlr4/blob/master/doc/python-target.md) metody dopasowaliśmy do naszego projektu. Domyślnie w każdej metodzie uruchamiany jest poniższy blok kodu:
+```python
+def visitToken(self, ctx:CParser.Token):
+    res = ""
+        for child in ctx.children:
+            if child.getChildCount() == 0:
+                res += child.getText()
+            else:
+                res += self.visit(child)
+    return res
+```
+Metoda ta polega na odwiedzeniu najniższych liści wygenerowanego drzewa składniowego oraz pobranie jego wartości (tekstu). Mając już te wartości, możemy dopasować je do języka ```Python```. Przykładowo:  
+```python
+def visitPrimaryExpression(self, ctx:CParserPrimaryExpressionContext):
+    res = ""
+    for child in ctx.children:
+        if child.getChildCount() == 0:
+            prim_expr = child.getText()
+            if prim_expr in ["true", "false"]:
+                prim_expr[0] = prim_expr[0].upper()
+            res += prim_expr
+        else:
+            res += self.visit(child)        
+    return res
+```  
+W metodzie tej zamieniamy wartości "true/false" na "True/False" (w języku Python wartości logiczne są z wielkiej litery). W podobny sposób dopasowywaliśmy inne tokeny na zasadzie "jeśli otrzymanym tokenem jest _token\_1_, to zamień go na _ciag\_instrukcji\_1_".  
+Metody, które w ten sposób zmieniliśmy, to:
+- ```visitPrimaryExpression```
+- ```visitPostfixExpression```
+- ```visitLogicalAndExpression```
+- ```visitLogicalOrExpression```
+- ```visitDeclaration```
+- ```visitTypeSpecifier```
+- ```visitCompoundStatement```
+- ```visitExpressionStatement```
+- ```visitSelectionStatement```
+- ```visitIterationStatement```
+- ```visitForCondition```
+- ```visitJumpStatement```
+- ```visitFunctionDefinition```  
+
+Wyjątkiem jest metoda ```visitCompilationUnit```, która "skleja" cały wygenerowany kod w całość.
 
 ## Krótka instrukcja obsługi
 
