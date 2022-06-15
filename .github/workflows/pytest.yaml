@@ -10,6 +10,6 @@ jobs:
           python-version: '3.x'
       - name: Install Dependencies
         run: |
-          pip install .
+          pip install -e .
       - name: Execute tests
         run: pytest
