@@ -6,7 +6,7 @@ Konwerter C do Pythona
 [![GitHub top language](https://img.shields.io/github/languages/top/agh-c2py/c2py)](https://github.com/agh-c2py/c2py/search?l=python)
 [![PEP8](https://img.shields.io/badge/code%20style-pep8-blue.svg)](https://www.python.org/dev/peps/pep-0008/)
 
-## Autorzy
+## Dane studentów
 
 - Kamila Skorupka (kskorupka@student.agh.edu.pl)
 - Piotr Sokołowski (psokolowski@student.agh.edu.pl)
@@ -16,100 +16,99 @@ Konwerter C do Pythona
 Naszym celem jest stworzenie konwertera kodu dla podjęzyka C do języka Python. Wynikiem działania naszego programu będzie plik zawierający wygenerowany kod. Planowanym językiem implementacji jest Python z wykorzystaniem parsera ~~[PLY](https://github.com/dabeaz/ply)~~ [ANTLR 4](https://github.com/antlr/antlr4/blob/master/doc/python-target.md).
 
 ## Opis tokenów
-| Token | Opis |
-| :---: | :--: |
-|Auto|auto|
-|Break|break|
-|Case | case|
-|Char | char|
-|Const | const|
-|Continue | continue|
-|Default | default|
-|Do | do|
-|Double | double|
-|Else | else|
-|Enum | enum|
-|Extern | extern|
-|Float | float|
-|For | for|
-|Goto | goto|
-|If | if|
-|Inline | inline|
-|Int | int|
-|Long | long|
-|Register | register|
-|Restrict | restrict|
-|Return | return|
-|Short | short|
-|Signed | signed|
-|Sizeof | sizeof|
-|Static | static|
-|Struct | struct|
-|Switch | switch|
-|Typedef | typedef|
-|Union | union|
-|Unsigned | unsigned|
-|Void | void|
-|Volatile | volatile|
-|While | while|
-|Alignas | _Alignas|
-|Alignof | _Alignof|
-|Atomic | _Atomic|
-|Bool | _Bool|
-|Complex | _Complex|
-|Generic | _Generic|
-|Imaginary | _Imaginary|
-|Noreturn | _Noreturn|
-|StaticAssert | _Static_assert|
-|ThreadLocal | _Thread_local|
-|LeftParen | (|
-|RightParen | )|
-|LeftBracket | [|
-|RightBracket | ]|
-|LeftBrace | {|
-|RightBrace | }|
-|Less | <|
-|LessEqual | <=|
-|Greater | >|
-|GreaterEqual | >=|
-|LeftShift | <<|
-|RightShift | >>|
-|Plus | +|
-|PlusPlus | ++|
-|Minus | -|
-|MinusMinus | --|
-|Star | *|
-|Div | /|
-|Mod | %|
-|And | &|
-|Or | \||
-|AndAnd | &&|
-|OrOr | \|\||
-|Caret | ^|
-|Not | !|
-|Tilde | ~|
-|Question | ?|
-|Colon |: |
-|Semi | ;|
-|Comma | ,|
-|Assign | =|
-|StarAssign | *=|
-|DivAssign | /=|
-|ModAssign | %=|
-|PlusAssign | +=|
-|MinusAssign | -=|
-|LeftShiftAssign | <<=|
-|RightShiftAssign | >>=|
-|AndAssign | &=|
-|XorAssign | ^=|
-|OrAssign | \|=|
-|Equal | ==|
-|NotEqual | !=|
-|Arrow | ->|
-|Dot | .|
-|Ellipsis | ...|
 
-
+|      Token       |      Opis      |
+| :--------------: | :------------: |
+|       Auto       |      auto      |
+|      Break       |     break      |
+|       Case       |      case      |
+|       Char       |      char      |
+|      Const       |     const      |
+|     Continue     |    continue    |
+|     Default      |    default     |
+|        Do        |       do       |
+|      Double      |     double     |
+|       Else       |      else      |
+|       Enum       |      enum      |
+|      Extern      |     extern     |
+|      Float       |     float      |
+|       For        |      for       |
+|       Goto       |      goto      |
+|        If        |       if       |
+|      Inline      |     inline     |
+|       Int        |      int       |
+|       Long       |      long      |
+|     Register     |    register    |
+|     Restrict     |    restrict    |
+|      Return      |     return     |
+|      Short       |     short      |
+|      Signed      |     signed     |
+|      Sizeof      |     sizeof     |
+|      Static      |     static     |
+|      Struct      |     struct     |
+|      Switch      |     switch     |
+|     Typedef      |    typedef     |
+|      Union       |     union      |
+|     Unsigned     |    unsigned    |
+|       Void       |      void      |
+|     Volatile     |    volatile    |
+|      While       |     while      |
+|     Alignas      |    _Alignas    |
+|     Alignof      |    _Alignof    |
+|      Atomic      |    _Atomic     |
+|       Bool       |     _Bool      |
+|     Complex      |    _Complex    |
+|     Generic      |    _Generic    |
+|    Imaginary     |   _Imaginary   |
+|     Noreturn     |   _Noreturn    |
+|   StaticAssert   | _Static_assert |
+|   ThreadLocal    | _Thread_local  |
+|    LeftParen     |       (        |
+|    RightParen    |       )        |
+|   LeftBracket    |       [        |
+|   RightBracket   |       ]        |
+|    LeftBrace     |       {        |
+|    RightBrace    |       }        |
+|       Less       |       <        |
+|    LessEqual     |       <=       |
+|     Greater      |       >        |
+|   GreaterEqual   |       >=       |
+|    LeftShift     |       <<       |
+|    RightShift    |       >>       |
+|       Plus       |       +        |
+|     PlusPlus     |       ++       |
+|      Minus       |       -        |
+|    MinusMinus    |       --       |
+|       Star       |       *        |
+|       Div        |       /        |
+|       Mod        |       %        |
+|       And        |       &        |
+|        Or        |       \|       |
+|      AndAnd      |       &&       |
+|       OrOr       |      \|\|      |
+|      Caret       |       ^        |
+|       Not        |       !        |
+|      Tilde       |       ~        |
+|     Question     |       ?        |
+|      Colon       |       :        |
+|       Semi       |       ;        |
+|      Comma       |       ,        |
+|      Assign      |       =        |
+|    StarAssign    |       *=       |
+|    DivAssign     |       /=       |
+|    ModAssign     |       %=       |
+|    PlusAssign    |       +=       |
+|   MinusAssign    |       -=       |
+| LeftShiftAssign  |      <<=       |
+| RightShiftAssign |      >>=       |
+|    AndAssign     |       &=       |
+|    XorAssign     |       ^=       |
+|     OrAssign     |      \|=       |
+|      Equal       |       ==       |
+|     NotEqual     |       !=       |
+|      Arrow       |       ->       |
+|       Dot        |       .        |
+|     Ellipsis     |      ...       |
 
 ## Gramatyka języka C
 
@@ -133,17 +132,13 @@ Tę klasę wykorzystaliśmy jako generator kodu. Klasa została wygenerowana prz
 
 ## Informacje o stosowanych narzędziach i technologiach
 
-Konwerter wykorzystuje bibliotekę `antlr4-python3-runtime`. Przed uruchomieniem programu, należy ją zainstalować:
-
-```bash
-pip install antlr4-python3-runtime
-```
+Konwerter wykorzystuje bibliotekę `antlr4-python3-runtime` do obsługi skanera, parsera oraz generatora kodu. Inną wykorzystywaną przez nas biblioteką jest `autopep8`, która pozwala na sformatowanie kodu wyjściowego. Są one instalowane automatycznie razem z naszym narzędziem ([więcej informacji](#uruchomienie)).
 
 ## Informacje o zastosowanych metodach i algorytmach
 
-<span style="color:red;">_**Do weryfikacji**_</span>  
 W celu wygenerowania kodu wykorzystaliśmy klasę CVisitor. Wygenerowane przez [ANTLR 4](https://github.com/antlr/antlr4/blob/master/doc/python-target.md) metody dopasowaliśmy do naszego projektu. Domyślnie w każdej metodzie uruchamiany jest poniższy blok kodu:
-```python
+
+```py
 def visitToken(self, ctx:CParser.Token):
     res = ""
         for child in ctx.children:
@@ -153,8 +148,10 @@ def visitToken(self, ctx:CParser.Token):
                 res += self.visit(child)
     return res
 ```
-Metoda ta polega na odwiedzeniu najniższych liści wygenerowanego drzewa składniowego oraz pobranie jego wartości (tekstu). Mając już te wartości, możemy dopasować je do języka ```Python```. Przykładowo:  
-```python
+
+Metoda ta polega na odwiedzeniu najniższych liści wygenerowanego drzewa składniowego oraz pobranie jego wartości (tekstu). Mając już te wartości, możemy dopasować je do języka `Python`. Przykładowo:
+
+```py
 def visitPrimaryExpression(self, ctx:CParserPrimaryExpressionContext):
     res = ""
     for child in ctx.children:
@@ -166,24 +163,26 @@ def visitPrimaryExpression(self, ctx:CParserPrimaryExpressionContext):
         else:
             res += self.visit(child)        
     return res
-```  
-W metodzie tej zamieniamy wartości "true/false" na "True/False" (w języku Python wartości logiczne są z wielkiej litery). W podobny sposób dopasowywaliśmy inne tokeny na zasadzie "jeśli otrzymanym tokenem jest ```token_1```, to zamień go na ```ciag_instrukcji_1```".  
-Metody, które w ten sposób zmieniliśmy, to:
-- ```visitPrimaryExpression```
-- ```visitPostfixExpression```
-- ```visitLogicalAndExpression```
-- ```visitLogicalOrExpression```
-- ```visitDeclaration```
-- ```visitTypeSpecifier```
-- ```visitCompoundStatement```
-- ```visitExpressionStatement```
-- ```visitSelectionStatement```
-- ```visitIterationStatement```
-- ```visitForCondition```
-- ```visitJumpStatement```
-- ```visitFunctionDefinition```  
+```
 
-Wyjątkiem jest metoda ```visitCompilationUnit```, która łączy cały wygenerowany kod w całość.
+W metodzie tej zamieniamy wartości "true/false" na "True/False" (w języku Python wartości logiczne są z wielkiej litery). W podobny sposób dopasowywaliśmy inne tokeny na zasadzie "jeśli otrzymanym tokenem jest `token_1`, to zamień go na `ciag_instrukcji_1`".  
+Metody, które w ten sposób zmieniliśmy, to:
+
+- `visitPrimaryExpression`
+- `visitPostfixExpression`
+- `visitLogicalAndExpression`
+- `visitLogicalOrExpression`
+- `visitDeclaration`
+- `visitTypeSpecifier`
+- `visitCompoundStatement`
+- `visitExpressionStatement`
+- `visitSelectionStatement`
+- `visitIterationStatement`
+- `visitForCondition`
+- `visitJumpStatement`
+- `visitFunctionDefinition`  
+
+Wyjątkiem jest metoda `visitCompilationUnit`, która łączy cały wygenerowany kod w całość - `compilationUnit` jest symbolem startowym.
 
 ## Krótka instrukcja obsługi
 
@@ -194,7 +193,7 @@ Po [sklonowaniu](https://github.com/agh-c2py/c2py.git) lub [pobraniu i rozpakowa
 ```bash
 git clone https://github.com/agh-c2py/c2py.git
 cd c2py
-pip install -e .
+pip install .
 python . "examples/helloworld.c"
 ```
 
@@ -204,33 +203,59 @@ Plik w języku Python zostanie zapisane w pliku `output/helloworld.c.py`. Urucho
 python output/helloworld.c.py
 ```
 
+Pełne informacje o programie można wyświetlić korzystając z opcji `-h`:
+
+```
+python . -h
+```
+
+Polecenie to wyświetli następujący ekran pomocy:
+
+```
+usage: c2py [-h] [-o dir] [-f] path
+
+C2Py is a tool to convert C code to Python code.
+
+positional arguments:
+  path                  path to source code in C
+
+options:
+  -h, --help            show this help message and exit
+  -o dir, --output dir  specifies the output directory
+  -f, --format          format the output using PEP8 code style
+```
+
 ## Testy i przykłady
+
 ### Testy
+
 W celu przetestowania naszej aplikacji zostały napisane testy automatyczne przy użyciu `pytest`. Znajdują się one w folderze `test`. Aby je uruchomić, należy wpisać polecenie w katalogu głównym projektu:
 
 ```bash
 pytest
-```  
-Testom poddajemy następujące przypadki:  
-- wyrażenia warunkowe  (```converter_if_statements.py```)  
-- pętle (```converter_loop_test.py```)
-- pusty program (```converter_test.py```)
-- "Hello World!" (```converter_test.py```)
-- program drukujący kilka linii (```converter_test.py```)
-- program "Czy liczba jest pierwsza?" (```converter_test.py```)  
+```
 
-<span style="color:red;">_**Należy opisać testy!!!**_ </span> 
+Testom poddajemy następujące przypadki:
+
+- wyrażenia warunkowe  (`converter_if_statements.py`)  
+- pętle (`converter_loop_test.py`)
+- pusty program (`converter_test.py`)
+- "Hello World!" (`converter_test.py`)
+- program drukujący kilka linii (`converter_test.py`)
+- program "Czy liczba jest pierwsza?" (`converter_test.py`)  
+
 ### Przykłady
+
 Przykłady znajdują się w folderze `examples`:
 
 - **errors** : programy, które zawierają błędy składniowe
 - **if_statements** : programy z wykorzystaniem wyrażeń warunkowych
-- **loops** : programy z wykorzystaniem pętli, w tym: ```for```, ```while``` oraz ```do while```
+- **loops** : programy z wykorzystaniem pętli, w tym: `for`, `while` oraz `do while`
 
 oraz dodatkowo:
 
-- **empty.c** : pusta definicja funkcji ```main```
-- **helloworld.c** : program, który wyświetla napis ```"Hello world!"```
+- **empty.c** : pusta definicja funkcji `main`
+- **helloworld.c** : program, który wyświetla napis `"Hello world!"`
 - **if_primary_number.c** : program, który sprawdza, czy liczba jest pierwsza
 
 ## Możliwe rozszerzenia programu
@@ -239,4 +264,4 @@ W przyszłości planujemy rozszerzyć działanie programu o współpracę z plik
 
 ## Ograniczenia programu
 
-C2Py działa tylko dla prostych definicji funkcji z wykorzystaniem wyrażeń warunkowych, pętli oraz funkcji ```printf```. Dodatkowo, działa on tylko dla biblioteki "stdio.h". Kolejnym ograniczeniem jest konieczność używania klamer przy instrukcjach warunkowych oraz pętlach ze względu na wcięcia, które należy brać pod uwagę w języku Python. Przyjęliśmy również uproszczenie, że każdą pętlę zamieniamy na pętlę ```while```.
+C2Py działa tylko dla prostych definicji funkcji z wykorzystaniem wyrażeń warunkowych, pętli oraz funkcji `printf`. Dodatkowo, działa on tylko dla biblioteki "stdio.h". Kolejnym ograniczeniem jest konieczność używania klamer przy instrukcjach warunkowych oraz pętlach ze względu na wcięcia, które należy brać pod uwagę w języku Python. Przyjęliśmy również uproszczenie, że każdą pętlę zamieniamy na pętlę `while`.
