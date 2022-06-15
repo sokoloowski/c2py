@@ -13,7 +13,103 @@ Konwerter C do Pythona
 
 ## Założenia programu
 
-Naszym celem jest stworzenie konwertera kodu dla podjęzyka C do języka Python. Planowanym językiem implementacji jest Python z wykorzystaniem parsera ~~[PLY](https://github.com/dabeaz/ply)~~ [ANTLR 4](https://github.com/antlr/antlr4/blob/master/doc/python-target.md).
+Naszym celem jest stworzenie konwertera kodu dla podjęzyka C do języka Python. Wynikiem działania naszego programu będzie plik zawierający wygenerowany kod. Planowanym językiem implementacji jest Python z wykorzystaniem parsera ~~[PLY](https://github.com/dabeaz/ply)~~ [ANTLR 4](https://github.com/antlr/antlr4/blob/master/doc/python-target.md).
+
+## Opis tokenów
+| Token | Opis |
+| :---: | :--: |
+|Auto|auto|
+|Break|break|
+|Case | case|
+|Char | char|
+|Const | const|
+|Continue | continue|
+|Default | default|
+|Do | do|
+|Double | double|
+|Else | else|
+|Enum | enum|
+|Extern | extern|
+|Float | float|
+|For | for|
+|Goto | goto|
+|If | if|
+|Inline | inline|
+|Int | int|
+|Long | long|
+|Register | register|
+|Restrict | restrict|
+|Return | return|
+|Short | short|
+|Signed | signed|
+|Sizeof | sizeof|
+|Static | static|
+|Struct | struct|
+|Switch | switch|
+|Typedef | typedef|
+|Union | union|
+|Unsigned | unsigned|
+|Void | void|
+|Volatile | volatile|
+|While | while|
+|Alignas | _Alignas|
+|Alignof | _Alignof|
+|Atomic | _Atomic|
+|Bool | _Bool|
+|Complex | _Complex|
+|Generic | _Generic|
+|Imaginary | _Imaginary|
+|Noreturn | _Noreturn|
+|StaticAssert | _Static_assert|
+|ThreadLocal | _Thread_local|
+|LeftParen | (|
+|RightParen | )|
+|LeftBracket | [|
+|RightBracket | ]|
+|LeftBrace | {|
+|RightBrace | }|
+|Less | <|
+|LessEqual | <=|
+|Greater | >|
+|GreaterEqual | >=|
+|LeftShift | <<|
+|RightShift | >>|
+|Plus | +|
+|PlusPlus | ++|
+|Minus | -|
+|MinusMinus | --|
+|Star | *|
+|Div | /|
+|Mod | %|
+|And | &|
+|Or | \||
+|AndAnd | &&|
+|OrOr | \|\||
+|Caret | ^|
+|Not | !|
+|Tilde | ~|
+|Question | ?|
+|Colon |: |
+|Semi | ;|
+|Comma | ,|
+|Assign | =|
+|StarAssign | *=|
+|DivAssign | /=|
+|ModAssign | %=|
+|PlusAssign | +=|
+|MinusAssign | -=|
+|LeftShiftAssign | <<=|
+|RightShiftAssign | >>=|
+|AndAssign | &=|
+|XorAssign | ^=|
+|OrAssign | \|=|
+|Equal | ==|
+|NotEqual | !=|
+|Arrow | ->|
+|Dot | .|
+|Ellipsis | ...|
+
+
 
 ## Gramatyka języka C
 
@@ -33,7 +129,7 @@ Jest to parser wygenerowany przez [ANTLR 4](https://github.com/antlr/antlr4/blob
 
 ### CVisitor
 
-Ten obiekt wykorzystaliśmy jako generator kodu. Obiekt został wygenerowany przez [ANTLR 4](https://github.com/antlr/antlr4/blob/master/doc/python-target.md), który następnie dopasowaliśmy do naszego projektu. Przyjęliśmy założenie, że funkcje/wyrażenia warunkowe/pętle zawierają klamry. Generator kodu napisaliśmy dla biblioteki "stdio.h", biorąc pod uwagę tylko funkcję "printf" jako funkcję wbudowaną.
+Tę klasę wykorzystaliśmy jako generator kodu. Klasa została wygenerowana przez [ANTLR 4](https://github.com/antlr/antlr4/blob/master/doc/python-target.md), którą następnie dopasowaliśmy do naszego projektu. Przyjęliśmy założenie, że funkcje/wyrażenia warunkowe/pętle zawierają klamry. Generator kodu napisaliśmy dla biblioteki "stdio.h", biorąc pod uwagę tylko funkcję "printf" jako funkcję wbudowaną.
 
 ## Informacje o stosowanych narzędziach i technologiach
 
@@ -71,7 +167,7 @@ def visitPrimaryExpression(self, ctx:CParserPrimaryExpressionContext):
             res += self.visit(child)        
     return res
 ```  
-W metodzie tej zamieniamy wartości "true/false" na "True/False" (w języku Python wartości logiczne są z wielkiej litery). W podobny sposób dopasowywaliśmy inne tokeny na zasadzie "jeśli otrzymanym tokenem jest _token\_1_, to zamień go na _ciag\_instrukcji\_1_".  
+W metodzie tej zamieniamy wartości "true/false" na "True/False" (w języku Python wartości logiczne są z wielkiej litery). W podobny sposób dopasowywaliśmy inne tokeny na zasadzie "jeśli otrzymanym tokenem jest ```token_1```, to zamień go na ```ciag_instrukcji_1```".  
 Metody, które w ten sposób zmieniliśmy, to:
 - ```visitPrimaryExpression```
 - ```visitPostfixExpression```
@@ -87,7 +183,7 @@ Metody, które w ten sposób zmieniliśmy, to:
 - ```visitJumpStatement```
 - ```visitFunctionDefinition```  
 
-Wyjątkiem jest metoda ```visitCompilationUnit```, która "skleja" cały wygenerowany kod w całość.
+Wyjątkiem jest metoda ```visitCompilationUnit```, która łączy cały wygenerowany kod w całość.
 
 ## Krótka instrukcja obsługi
 
@@ -109,25 +205,32 @@ python output/helloworld.c.py
 ```
 
 ## Testy i przykłady
-
+### Testy
 W celu przetestowania naszej aplikacji zostały napisane testy automatyczne przy użyciu `pytest`. Znajdują się one w folderze `test`. Aby je uruchomić, należy wpisać polecenie w katalogu głównym projektu:
 
 ```bash
 pytest
 ```  
-  
+Testom poddajemy następujące przypadki:  
+- wyrażenia warunkowe  (```converter_if_statements.py```)  
+- pętle (```converter_loop_test.py```)
+- pusty program (```converter_test.py```)
+- "Hello World!" (```converter_test.py```)
+- program drukujący kilka linii (```converter_test.py```)
+- program "Czy liczba jest pierwsza?" (```converter_test.py```)  
+
 <span style="color:red;">_**Należy opisać testy!!!**_ </span> 
-  
+### Przykłady
 Przykłady znajdują się w folderze `examples`:
 
 - **errors** : programy, które zawierają błędy składniowe
 - **if_statements** : programy z wykorzystaniem wyrażeń warunkowych
-- **loops** : programy z wykorzystaniem pętli, w tym: _for_, _while_ oraz _do while_
+- **loops** : programy z wykorzystaniem pętli, w tym: ```for```, ```while``` oraz ```do while```
 
 oraz dodatkowo:
 
-- **empty.c** : pusta definicja funkcji _main_
-- **helloworld.c** : program, który wyświetla napis _"Hello world!"_
+- **empty.c** : pusta definicja funkcji ```main```
+- **helloworld.c** : program, który wyświetla napis ```"Hello world!"```
 - **if_primary_number.c** : program, który sprawdza, czy liczba jest pierwsza
 
 ## Możliwe rozszerzenia programu
@@ -136,4 +239,4 @@ W przyszłości planujemy rozszerzyć działanie programu o współpracę z plik
 
 ## Ograniczenia programu
 
-C2Py działa tylko dla prostych definicji funkcji z wykorzystaniem wyrażeń warunkowych, pętli oraz funkcji "printf". Dodatkowo, działa on tylko dla biblioteki "stdio.h". Kolejnym ograniczeniem jest konieczność używania klamer przy instrukcjach warunkowych oraz pętlach ze względu na wcięcia, które należy brać pod uwagę w języku Python. Przyjęliśmy również uproszczenie, że każdą pętlę zamieniamy na pętlę _while_.
+C2Py działa tylko dla prostych definicji funkcji z wykorzystaniem wyrażeń warunkowych, pętli oraz funkcji ```printf```. Dodatkowo, działa on tylko dla biblioteki "stdio.h". Kolejnym ograniczeniem jest konieczność używania klamer przy instrukcjach warunkowych oraz pętlach ze względu na wcięcia, które należy brać pod uwagę w języku Python. Przyjęliśmy również uproszczenie, że każdą pętlę zamieniamy na pętlę ```while```.
