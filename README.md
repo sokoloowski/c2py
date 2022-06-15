@@ -193,7 +193,7 @@ Po [sklonowaniu](https://github.com/agh-c2py/c2py.git) lub [pobraniu i rozpakowa
 ```bash
 git clone https://github.com/agh-c2py/c2py.git
 cd c2py
-pip install .
+pip install -e .
 python . "examples/helloworld.c"
 ```
 
